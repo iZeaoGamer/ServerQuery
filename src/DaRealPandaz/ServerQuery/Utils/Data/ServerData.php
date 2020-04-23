@@ -39,7 +39,7 @@ class ServerData {
         $this->parsePlugins();
         $this->parseOnlinePlayers();
         $this->maxPlayerCount = $data["maxplayers"];
-        $this->isWhitelisted = $data["raw"]["whitelist"];
+        $this->isWhitelisted = ($data["raw"]["whitelist"] === "on") ? true : false;
         $this->rawIp = $data["raw"]["hostip"];
         $this->ip = $data["query"]["host"];
         $this->port = $data["query"]["port"];
