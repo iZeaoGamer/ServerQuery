@@ -24,7 +24,7 @@ class QueryCMD extends Command {
                 if(isset($args[1])) {
                     if(is_numeric($args[1])) {
                         $query = QueryAPI::queryServer($args[0], $args[1]);
-                        if($query !== false) {
+                        if($query) {
                             $sender->sendMessage(TextFormat::GREEN.$query->getIp().":".$query->getPort()." is currently online with ".$query->getPlayerCount()." players online.");
                         }else {
                             $sender->sendMessage(TextFormat::RED."The server you requested is currently offline.");
