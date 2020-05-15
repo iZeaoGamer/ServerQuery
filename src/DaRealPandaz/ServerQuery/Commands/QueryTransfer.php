@@ -8,7 +8,7 @@ use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\utils\TextFormat;
 
-class QueryCMD extends Command {
+class QueryTransfer extends Command {
 
     public function __construct(string $name, string $description = "", string $usageMessage = null, array $aliases = [])
     {
@@ -25,8 +25,13 @@ class QueryCMD extends Command {
                     if(is_numeric($args[1])) {
                         $query = QueryAPI::queryServer($args[0], $args[1]);
                         if($query) {
-                            $sender->sendMessage(TextFormat::GREEN.$query->getIp().":".$query->getPort()." is currently online with ".$query->getPlayerCount()." players online.");
+                            if(!$query->isWhitelisted()){
+                            $sender->transfer($args[0], $args[1]);
+                         //   $sender->sendMessage(TextFormat::GREEN.$query->getIp().":".$query->getPort()." is currently online with ".$query->getPlayerCount()." players online.");
                         }else {
+                                $sender->sendMessage(TextFormat::colorize("&cThis server is currently in maintenance. Please try again later."));
+                            }
+                        }else{
                             $sender->sendMessage(TextFormat::RED."The server you requested is currently offline.");
                         }
                     }else {
