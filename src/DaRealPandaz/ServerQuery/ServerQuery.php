@@ -5,6 +5,7 @@ namespace DaRealPandaz\ServerQuery;
 
 use DaRealPandaz\ServerQuery\API\QueryAPI;
 use DaRealPandaz\ServerQuery\Commands\QueryCMD;
+use DaRealPandaz\ServerQuery\Commands\QueryTransfer;
 use pocketmine\plugin\PluginBase;
 
 class ServerQuery extends PluginBase {
@@ -55,6 +56,7 @@ class ServerQuery extends PluginBase {
      * @return void
      */
     function initCommands(): void {
+        $this->getServer()->getCommandMap()->register("ServerQuery", new QueryTransfer("querytransfer", "Transfers to another server"));
         $this->getServer()->getCommandMap()->register("ServerQuery", new QueryCMD("query", "queries servers for information"));
     }
 
