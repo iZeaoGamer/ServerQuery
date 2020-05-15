@@ -14,7 +14,7 @@ class QueryTransfer extends Command {
     {
         parent::__construct($name, $description, $usageMessage, $aliases);
         $this->setPermission("drp.query.cmd");
-        $this->setUsage("/query <string:ip> <int:port>");
+        $this->setUsage("/querytransfer <string:ip> <int:port>");
     }
 
     public function execute(CommandSender $sender, string $commandLabel, array $args)
