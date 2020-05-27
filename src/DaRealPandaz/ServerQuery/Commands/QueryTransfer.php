@@ -3,7 +3,8 @@
 /** @author DaRealPandaz */
 namespace DaRealPandaz\ServerQuery\Commands;
 
-use DaRealPandaz\ServerQuery\API\QueryAPI;
+use linmquery\PMQuery;
+use libmquery\PMQueryException;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\utils\TextFormat;
@@ -23,8 +24,31 @@ class QueryTransfer extends Command {
             if(isset($args[0])) {
                 if(isset($args[1])) {
                     if(is_numeric($args[1])) {
-                        $query = QueryAPI::queryServer($args[0], $args[1]);
-                        if($query) {
+                        try{
+            $online = PMQuery::query($this->ip, $this->port)['Players'];
+            $this->online = $online;
+        } catch (PmQueryException $e){
+            $this->online = -9999;
+        }
+    }if($this->online !== -9999){
+$sender->transfer($args[0], $args[1]);
+                    }else{
+$sender->sendMessage(TextFormat::colorize("&cThe server you've requested is currently offline."));
+                      
+                 }
+                    }else {
+                        $sender->sendMessage($this->getUsage());
+                    }
+                }else {
+                    $sender->sendMessage($this->getUsage());
+                }
+            }else {
+                $sender->sendMessage($this->getUsage());
+            }
+    }
+}
+                        
+                   /*     if($query) {
                             if(!$query->isWhitelisted()){
                             $sender->transfer($args[0], $args[1]);
                          //   $sender->sendMessage(TextFormat::GREEN.$query->getIp().":".$query->getPort()." is currently online with ".$query->getPlayerCount()." players online.");
